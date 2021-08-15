@@ -18,8 +18,8 @@ In this application, the following libraries and programming languages ​​hav
 * CSS
 * javascript
 * React application
- * Auth0
- Bootstrap
+* Auth0
+* Bootstrap
 
 ## Change the record
 1 . Building the login section 08/15/2021
