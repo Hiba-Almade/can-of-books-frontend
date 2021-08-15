@@ -1,6 +1,6 @@
 # Start your own "Can of Books" App:
 
-**Author**: Heba Almade, Odeh Abuzaid
+**Author**: Hiba Almade, Odeh Abuzaid
 
 
 **Version**: 1.0.0
