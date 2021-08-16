@@ -32,7 +32,7 @@ class App extends React.Component {
             </Route>
             <Route exact path="/Profile">
               {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
-              <Profile />
+              {this.props.auth0.isAuthenticated ? <Profile />: <></>}
             </Route>
           </Switch>
           <Footer />
