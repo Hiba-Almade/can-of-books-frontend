@@ -1,44 +1,42 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+
+import React, { Component } from "react";
 import { withAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 
-const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+import axios from 'axios';
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
 
-  componentDidMount =  () => {  
-    if(this.props.auth0.isAuthenticated) {
-       
-      this.props.auth0.getIdTokenClaims()
-      .then(result => {
+class Profile extends Component {
+
+
+  componentDidMount = () => {
+    if (this.props.auth0.isAuthenticated) {
+      this.props.auth0.getIdTokenClaims().then(result => {
         const jwt = result.__raw;
         const config = {
-          headers: {"Authorization" : `Bearer ${jwt}`},
+          headers: { "Authorization": `Bearer ${jwt}` },
           method: 'get',
-          baseURL: 'https://localhost:8000',
+          baseURL: "http://localhost:8000",
           url: '/auth'
         }
         axios(config)
           .then(axiosResults => console.log(axiosResults.data))
-          .catch(err => console.error(err));
+          .catch(err => console.error(err))
       })
-      .catch(err => console.error(err));
+        .catch(err => console.error(err));
     }
-  }  
-
-  return (
-    isAuthenticated && (
-      <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-      </div>
+  }
+  render() {
+    return (
+      this.props.auth0.isAuthenticated && (
+        <div>
+          <img src={this.props.auth0.user.picture} alt={this.props.auth0.user.name} />
+          <h2>{this.props.auth0.user.name}</h2>
+          <p>{this.props.auth0.user.email}</p>
+        </div>
+      )
     )
-  );
-};
+  }
+}
+
 
 export default withAuth0(Profile);
