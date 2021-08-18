@@ -31,6 +31,22 @@ class MyFavoriteBooks extends React.Component {
     })
     console.log(this.state.showModel)
   }
+
+  deleteBook =(id)=>{
+      let config={
+          method: 'delete',
+          baseURL: "http://localhost:8000",
+          url: `/delbooks/${id}?email=${this.props.auth0.user.email}`,         
+      }
+      axios(config).then(result=>{
+        this.setState({
+          bookData:result.data.books
+       
+        })
+        console.log(bookData)
+      })
+  
+  }
   componentDidMount = () => {
     let url = `http://localhost:8000/books?email=hibaalmade998@gmail.com`
     axios.get(url).then(res => {
@@ -65,11 +81,13 @@ class MyFavoriteBooks extends React.Component {
                         />
                         <Carousel.Caption>
                           <h3>{ele.title}</h3>
-                          <p>{ele.descripyion}</p>
+                          <p>{ele.description}</p>
                           <p>{ele.status}</p>
-                          <Button>Edit </Button>
-                          <Button>Delete </Button>
-
+                          <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary">Edit</button>
+                            <button type="button" class="btn btn-secondary" onClick={() => this.deleteBook(ele._id)}>Delete</button>
+                         
+                          </div>
                         </Carousel.Caption>
                       </Carousel.Item>
 
@@ -93,7 +111,7 @@ class MyFavoriteBooks extends React.Component {
 
           </>
         </Jumbotron>
-        <BookFormModal showModel={this.state.showModel} handleCloses={this.state.handleClose} />
+        <BookFormModal show={this.state.showModel} handleCloseModel={this.handleClose} bookData={this.state.bookData} />
       </>
     )
   }
