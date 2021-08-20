@@ -7,6 +7,7 @@ import { withAuth0 } from '@auth0/auth0-react';
 import BookFormModal from './BookFormModal';
 import { Button } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel'
+import BookFormUpdate from './BookFormUpdate';
 
 
 class MyFavoriteBooks extends React.Component {
@@ -14,7 +15,9 @@ class MyFavoriteBooks extends React.Component {
     super(props);
     this.state = {
       bookData: [],
-      showModel: false
+      showModel: false,
+      showupdateform :false,
+      bookId : 0
     };
   }
 
@@ -25,11 +28,24 @@ class MyFavoriteBooks extends React.Component {
     console.log(this.state.showModel)
 
   }
+  handleShowUpdate = (id) =>{
+    this.setState({
+      showupdateform:true,
+      bookId:id
+    })
+  }
   handleClose = () => {
     this.setState({
       showModel: false
     })
-    console.log(this.state.showModel)
+   
+  }
+
+  handleCloseUpdate = () => {
+    this.setState({
+      showupdateform: false
+    })
+   
   }
 
   deleteBook =(id)=>{
@@ -43,7 +59,7 @@ class MyFavoriteBooks extends React.Component {
           bookData:result.data.books
        
         })
-        console.log(bookData)
+      //  console.log(bookData)
       })
   
   }
@@ -84,7 +100,7 @@ class MyFavoriteBooks extends React.Component {
                           <p>{ele.description}</p>
                           <p>{ele.status}</p>
                           <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary">Edit</button>
+                            <button type="button" class="btn btn-secondary" onClick = { () => this.handleShowUpdate(ele._id)}>Edit</button>
                             <button type="button" class="btn btn-secondary" onClick={() => this.deleteBook(ele._id)}>Delete</button>
                          
                           </div>
@@ -112,6 +128,7 @@ class MyFavoriteBooks extends React.Component {
           </>
         </Jumbotron>
         <BookFormModal show={this.state.showModel} handleCloseModel={this.handleClose} bookData={this.state.bookData} />
+        <BookFormUpdate show={this.state.showupdateform} handleCloseModel={this.handleCloseUpdate} bookId ={this.state.bookId} bookData={this.state.bookData}/>
       </>
     )
   }

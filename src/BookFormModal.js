@@ -8,7 +8,9 @@ import { withAuth0 } from "@auth0/auth0-react";
 export class BookFormModal extends Component {
   constructor(props){
     super(props);
-   
+   this.state={
+    bookData:this.props.bookData
+   }
   }
 
  
